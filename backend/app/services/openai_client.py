@@ -12,11 +12,16 @@ model_providers_url = {
                 "Local":os.environ.get("LOCAL_URL")}
 
 def build_openai_client(api_key,model_provider_name) -> Optional[OpenAI]:
-    api_key = api_key
+    if model_provider_name not in model_providers_url:
+        current_app.logger.warning(f"Unknown model provider: {model_provider_name}")
+        return None
+    if model_provider_name == "Local":
+        api_key = "empty"
+    else:
+        api_key = api_key
     base_url = model_providers_url[model_provider_name]
     if not api_key:
         return None
-
     kwargs: Dict[str, Any] = {"api_key": api_key}
     if base_url:
         kwargs["base_url"] = base_url
