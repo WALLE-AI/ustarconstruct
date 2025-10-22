@@ -44,17 +44,12 @@ def normalize_role(sender: str) -> str:
         return "system"
     return "user"
 
+
 # --- Convert to OpenAI messages ---
 def to_openai_messages(payload: ChatRequest) -> List[Dict[str, Any]]:
     openai_messages: List[Dict[str, Any]] = []
 
-    sys_prefix = (
-        "You are a helpful assistant. "
-        "Provide correct, concise answers. "
-        "Do NOT reveal chain-of-thought. "
-        "A short high-level plan may be shown separately by the server; "
-        "your answer should start directly without any <think> tags."
-    )
+    # sys_prefix = system_prompt
     # openai_messages.append({"role": "system", "content": sys_prefix})
 
     flags_note = f"(search={'on' if payload.use_web_search else 'off'}, kb={payload.knowledge_base or 'none'})"

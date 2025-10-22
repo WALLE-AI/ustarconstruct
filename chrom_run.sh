@@ -1,0 +1,1 @@
+chroma run --path D:/LLM/project/ustarconstruct/data/embed_data

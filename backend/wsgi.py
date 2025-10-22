@@ -7,4 +7,4 @@ app = create_app()
 
 if __name__ == "__main__":
     # For local development
-    app.run(host="172.16.40.168", port=8000, debug=False)
+    app.run(host="127.0.0.1", port=8000, debug=False)
