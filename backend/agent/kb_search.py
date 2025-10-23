@@ -21,7 +21,7 @@ class KBSimpleSearch():
         self.knowledge_base = self.load_local_markdown_iterable_dataset("data/test_markdown")
         self.text_splitter = self._init_text_split()
         self.chroma_client = self._init_chroma_client()
-        self.collection_name = "kb_test_test_test"
+        self.collection_name = "kb_dev"
     
     def docs_text_split(self):
         source_docs = []
@@ -77,12 +77,12 @@ class KBSimpleSearch():
             query_embeddings=query_embed,
             n_results=5
         )
-        print(results)
+        return results
     
     def build_vector_chroma(self):
         collection = self.chroma_client.list_collections()
         list_collection_name = [name.name for name in collection]
-        if collection and self.collection_name not in list_collection_name:
+        if not collection and self.collection_name not in list_collection_name:
                 collection = self.chroma_client.create_collection(name=self.collection_name)
         else:
             print("collection name exsit:",self.collection_name)
@@ -92,15 +92,16 @@ class KBSimpleSearch():
         embeddings = []
         metadatas = []
         ids = []
-        for doc in tqdm(docs_processed[:10]):
+        for doc in tqdm(docs_processed):
             id = uuid.uuid4()
             doc_embed = self.get_embedding(doc.page_content)
             documents.append(doc.page_content)
             embeddings.append(doc_embed)
+            del doc.metadata["text"]
             metadatas.append(doc.metadata)
             ids.append(id.hex)
             
-        collection.upsert(
+        collection.add(
             ids=ids,
             documents=documents,
             embeddings=embeddings,
