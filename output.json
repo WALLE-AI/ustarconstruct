@@ -1,0 +1,143 @@
+{
+  "task_id": "img-only-v1.0-20250405-001",
+  "scene_guess": {
+    "scene": "基坑",
+    "rationale": "有围挡的土方开挖区域，符合基坑特征"
+  },
+  "auto_queries": [
+    "基坑临边防护栏杆缺失或仅一道栏杆未设踢脚板，存在坠落风险",
+    "基坑洞口未设置有效覆盖或覆盖物无固定，易引发人员坠落事故",
+    "基坑支护结构变形或围挡失效，可能导致边坡坍塌或人员伤亡",
+    "基坑周边通道堵塞、杂物堆放，影响应急疏散和作业安全",
+    "基坑作业区域未设置警示标识或警戒线，存在人员误入危险区域隐患"
+  ],
+  "overall_risk_score": 0,
+  "hazards": [
+    {
+      "id": "hazard_001",
+      "category": "临边防护缺失",
+      "label": "基坑临边防护栏杆缺失或仅一道栏杆未设踢脚板",
+      "evidence_region": {
+        "type": "bbox",
+        "bbox_xywh_norm": [
+          0.2,
+          0.4,
+          0.6,
+          0.6
+        ]
+      },
+      "evidence_quality": "clear",
+      "kb_citations": [
+        {
+          "doc_id": "《安徽省工程质量安全手册实施细则（试行）》（建质〔2021〕21号）.md",
+          "clause_id": "6.9.2",
+          "clause_brief": "坠落高度2m及以上需设防护栏杆并封闭",
+          "match_type": "direct"
+        }
+      ],
+      "severity": "A",
+      "risk_score": 0,
+      "confidence": 0.98,
+      "rationale_brief": "基坑临边无完整防护栏杆，未设踢脚板，存在高处坠落风险",
+      "remediation": [
+        "立即增设符合规范的防护栏杆及踢脚板",
+        "对所有临边区域进行全面排查整改"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "hazard_002",
+      "category": "洞口防护缺失",
+      "label": "基坑内洞口未设置有效覆盖或覆盖物无固定",
+      "evidence_region": {
+        "type": "bbox",
+        "bbox_xywh_norm": [
+          0.35,
+          0.45,
+          0.55,
+          0.6
+        ]
+      },
+      "evidence_quality": "clear",
+      "kb_citations": [
+        {
+          "doc_id": "《安徽省工程质量安全手册实施细则（试行）》（建质〔2021〕21号）.md",
+          "clause_id": "6.9.2",
+          "clause_brief": "洞口需设置有效覆盖物并固定",
+          "match_type": "direct"
+        }
+      ],
+      "severity": "B",
+      "risk_score": 0,
+      "confidence": 0.95,
+      "rationale_brief": "基坑内洞口无有效覆盖或覆盖物未固定，易引发坠落",
+      "remediation": [
+        "立即设置稳固覆盖物并固定",
+        "设置警示标识，禁止人员靠近"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "hazard_003",
+      "category": "通道堵塞",
+      "label": "基坑周边通道堵塞、杂物堆放",
+      "evidence_region": {
+        "type": "bbox",
+        "bbox_xywh_norm": [
+          0.0,
+          0.5,
+          0.5,
+          0.8
+        ]
+      },
+      "evidence_quality": "clear",
+      "kb_citations": [
+        {
+          "doc_id": "《安徽省工程质量安全手册实施细则（试行）》（建质〔2021〕21号）.md",
+          "clause_id": "6.9.2",
+          "clause_brief": "通道应保持畅通，禁止堆放杂物",
+          "match_type": "direct"
+        }
+      ],
+      "severity": "C",
+      "risk_score": 0,
+      "confidence": 0.92,
+      "rationale_brief": "基坑周边通道被木料等杂物堵塞，影响应急疏散",
+      "remediation": [
+        "立即清理通道杂物，恢复通行",
+        "设置安全警示标志"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "hazard_004",
+      "category": "警示标识缺失",
+      "label": "基坑作业区域未设置警示标识或警戒线",
+      "evidence_region": {
+        "type": "global"
+      },
+      "evidence_quality": "clear",
+      "kb_citations": [
+        {
+          "doc_id": "《安徽省工程质量安全手册实施细则（试行）》（建质〔2021〕21号）.md",
+          "clause_id": "6.9.2",
+          "clause_brief": "危险区域应设置警示标识或警戒线",
+          "match_type": "direct"
+        }
+      ],
+      "severity": "B",
+      "risk_score": 0,
+      "confidence": 0.9,
+      "rationale_brief": "基坑区域无任何警示标识，人员易误入危险区域",
+      "remediation": [
+        "立即设置醒目标识和警戒线",
+        "安排专人值守或设置围挡"
+      ],
+      "status": "CONFIRMED"
+    }
+  ],
+  "summary": "基坑临边防护缺失、洞口无覆盖、通道堵塞、无警示标识，存在高处坠落、人员误入等重大安全风险，需立即整改。",
+  "missing_info": [],
+  "version": "img-only-v1.0",
+  "image_path": "D:/LLM/project/ustarconstruct/uploads/f817f61fb280493296bc3ea0c2664a0c.png"
+}
