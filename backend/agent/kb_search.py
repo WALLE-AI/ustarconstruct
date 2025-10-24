@@ -15,15 +15,18 @@ from langchain_core.documents import Document
 # from langchain_community.document_loaders import PyPDFLoader
 from langchain_huggingface import HuggingFaceEmbeddings
 
+from backend.models.splitters.md_text_splitter import chunk_md_by_numbered_subtitles
+
+
 
 class KBSimpleSearch():
     def __init__(self):
         self.knowledge_base = self.load_local_markdown_iterable_dataset("data/test_markdown")
-        self.text_splitter = self._init_text_split()
+        # self.text_splitter = self._init_text_split()
         self.chroma_client = self._init_chroma_client()
-        self.collection_name = "kb_dev"
+        self.collection_name = "kb_dev_md"
     
-    def docs_text_split(self):
+    def docs_simple_text_split(self):
         source_docs = []
         for doc in self.knowledge_base:
             doc_data = Document(page_content=doc["text"], metadata=doc) 
@@ -70,24 +73,24 @@ class KBSimpleSearch():
         return chroma_client
     
     
-    def kb_search(self,query:str):
+    def kb_search(self,query:str,top_k:int):
         query_embed = self.get_embedding(query)
         collection = self.chroma_client.get_collection(self.collection_name)
         results = collection.query(
             query_embeddings=query_embed,
-            n_results=5
+            n_results=top_k
         )
         return results
     
     def build_vector_chroma(self):
         collection = self.chroma_client.list_collections()
         list_collection_name = [name.name for name in collection]
-        if not collection and self.collection_name not in list_collection_name:
+        if collection and self.collection_name not in list_collection_name:
                 collection = self.chroma_client.create_collection(name=self.collection_name)
         else:
             print("collection name exsit:",self.collection_name)
             collection = self.chroma_client.get_collection(self.collection_name)
-        docs_processed=self.docs_text_split()
+        docs_processed=self.md_text_split()
         documents = []
         embeddings = []
         metadatas = []
@@ -97,7 +100,7 @@ class KBSimpleSearch():
             doc_embed = self.get_embedding(doc.page_content)
             documents.append(doc.page_content)
             embeddings.append(doc_embed)
-            del doc.metadata["text"]
+            # del doc.metadata["text"]
             metadatas.append(doc.metadata)
             ids.append(id.hex)
             
@@ -118,6 +121,14 @@ class KBSimpleSearch():
             separators=["\n\n", "\n", ".", " ", ""],
         )
         return text_splitter
+    
+    def md_text_split(self) -> List[Document]:
+        docs=[]
+        for doc in self.knowledge_base:
+            text = Path(doc['source']).read_text(encoding="utf-8", errors="ignore")
+            chunks = chunk_md_by_numbered_subtitles(text,doc["filename"])
+            docs +=chunks
+        return docs
         
     
     def load_local_markdown_iterable_dataset(
